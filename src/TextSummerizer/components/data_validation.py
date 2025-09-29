@@ -2,7 +2,7 @@ import os
 from TextSummerizer.logging import logger
 from TextSummerizer.entity import DataValidationConfig
 
-class DataValiadtion:
+class DataValidation:
     def __init__(self, config: DataValidationConfig):
         self.config = config
 
