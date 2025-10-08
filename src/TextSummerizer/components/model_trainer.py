@@ -4,6 +4,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from datasets import load_dataset, load_from_disk
 from TextSummerizer.entity import ModelTrainerConfig
 import torch
+import os
 
 
 class LoggingCallback(TrainerCallback):
@@ -51,7 +52,14 @@ class ModelTrainer:
         
         trainer.train()
 
-        ## Save model
-        model_pegasus.save_pretrained(os.path.join(self.config.root_dir,"pegasus-samsum-model"))
-        ## Save tokenizer
-        tokenizer.save_pretrained(os.path.join(self.config.root_dir,"tokenizer"))
+
+                ## ✅ Save the model and tokenizer properly
+        model_dir = self.config.model_path
+        tokenizer_dir = self.config.tokenizer_path
+
+        os.makedirs(model_dir, exist_ok=True)
+        os.makedirs(tokenizer_dir, exist_ok=True)
+
+        model_pegasus.save_pretrained(model_dir)
+        tokenizer.save_pretrained(tokenizer_dir)
+
